@@ -33,7 +33,6 @@ public class VentanaLiga extends JFrame {
 		liga=ligaModificada;
 		vLiga=this;
 		
-
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 423, 300);

@@ -1,5 +1,4 @@
 import java.io.Serializable;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,16 +17,16 @@ public class Liga implements Serializable {
 		//private Equipo equipo[];
 		private ArrayList <Equipo> equipoLista = new ArrayList <Equipo> ();
 		private int idLiga;
-		
-		
+	
 		//BBDD
 		private Connection conexion = null; 
 		private Statement instruccion = null;// Hacer consultas en la BBDD
 		private ResultSet conjuntoResultados = null;// Aqui se guardan las consultas que vamos haciendo
 		private JComboBox comboBox;
+		private Equipo equipo;
 
-		
-		
+
+			
 	public Liga(Connection conexion) {
 		//Inicializamos
 		nombreLiga="Liga Española";
@@ -39,7 +38,8 @@ public class Liga implements Serializable {
 		//System.out.println (equipoLista.get (i));
 		//}		
 		leerLiga();
-		leerCombobox();
+		leerCombobox(equipo);
+		
 	}
 
 	//Creamos el constructor al que  pasamos los valores que queremos
@@ -102,22 +102,23 @@ public class Liga implements Serializable {
 		}
 	}
 	
-	public void leerCombobox(){
+	public void leerCombobox(Equipo equipo){
 		try{
 			instruccion = (Statement) conexion.createStatement();
 			conjuntoResultados = instruccion.executeQuery ("SELECT nombreEquipo FROM equipos");
-          // Bucle While para iniciar la consulta
-          while (conjuntoResultados.next())
-          {
-               //Rellenamos combobox a partir de la consulta
-              comboBox.addItem(conjuntoResultados.getObject("nombreEquipo"));
-          }
-          //Cerramos conexion
-          conexion.close();
-      } catch(SQLException e){
-          JOptionPane.showMessageDialog(null,"Error sql no se pueden leer datos");
-      }		
-	}
+			          // Bucle While para iniciar la consulta						
+			          while (conjuntoResultados.next())
+			          {
+			              //Rellenamos combobox a partir de la consulta
+			        	  //comboBox.addItem(conjuntoResultados.getObject("nombreEquipo"));
+			        	  comboBox.addItem(equipo.getNombreEquipo());
+			          }
+			          //Cerramos conexion
+			          conexion.close();
+			      } catch(SQLException e){
+			          JOptionPane.showMessageDialog(null,"Error sql no se pueden leer datos");
+			      }
+			}
 	
 	
 	//Metodo insertar equipo
@@ -138,8 +139,13 @@ public class Liga implements Serializable {
 		
 	//Metodo Eliminar equipo
 	public void EliminarEquipo(Equipo equipo) throws SQLException{
-		String seleccion= "DELETE FROM 'equipos' WHERE 'idEquipo' = ?";
-		instruccion.executeUpdate(seleccion);
+		String eliminarDato= "DELETE FROM 'equipos' WHERE 'idEquipo' = ?";
+		instruccion.executeUpdate(eliminarDato);
+	}
+	
+	//Metodo modificar equipo
+	public void modificarEquipo(){
+		
 	}
 }
 
