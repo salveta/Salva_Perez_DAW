@@ -93,7 +93,7 @@ public class VentanaLiga extends JFrame {
 				//Llamamos al método crear equipo y le decimos que nos abra una ventana
 				liga.nuevoEquipo();
 				System.out.println(liga.getnumEquipos());
-				OpenEquipoWindow(liga.getEquipo(liga.getnumEquipos()-1),false);
+				OpenEquipoWindow(new Equipo(),false);
 
 			}
 		});
@@ -111,6 +111,8 @@ public class VentanaLiga extends JFrame {
 		});
 		EliminarEquipo.setBounds(134, 208, 89, 23);
 		contentPane.add(EliminarEquipo);
+		
+		this.liga.rellenarCombo(this.comboBox);
 		
 	}
 	

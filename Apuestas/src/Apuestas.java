@@ -3,7 +3,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -25,6 +24,7 @@ public class Apuestas extends JFrame {
 			
 	//Nos conectamos a la BBDD
 	private Connection conexion = null; 
+
 
 
 	//Main method

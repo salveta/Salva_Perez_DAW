@@ -32,13 +32,15 @@ public class Liga implements Serializable {
 		nombreLiga="Liga Española";
 		numEquipos=0;		
 		this.conexion=conexion;
+		this.comboBox=comboBox;
 		// Rellenamos el arrayList
 		// for (int i = 0; i <numEquipos; i++) {
 		//((equipoLista.add(new Equipo());
 		//System.out.println (equipoLista.get (i));
 		//}		
+		/*
 		leerLiga();
-		leerCombobox(equipo);
+		leerCombobox();*/
 		
 	}
 
@@ -87,7 +89,11 @@ public class Liga implements Serializable {
 				equipoLista.remove(posicion);
 				
 			}
-		
+	public void rellenarCombo(JComboBox j){
+		this.comboBox=j;
+		leerLiga();
+		this.leerCombobox();
+	}
 	//Metodo leer liga
 	public void leerLiga(){
 		try{
@@ -102,22 +108,28 @@ public class Liga implements Serializable {
 		}
 	}
 	
-	public void leerCombobox(Equipo equipo){
+	public void leerCombobox(){
 		try{
 			instruccion = (Statement) conexion.createStatement();
 			conjuntoResultados = instruccion.executeQuery ("SELECT nombreEquipo FROM equipos");
 			          // Bucle While para iniciar la consulta						
 			          while (conjuntoResultados.next())
 			          {
+			        	  equipo = new Equipo();
 			              //Rellenamos combobox a partir de la consulta
+			        	  equipo.setNombreEquipo((String)(conjuntoResultados.getObject("nombreEquipo")));
 			        	  //comboBox.addItem(conjuntoResultados.getObject("nombreEquipo"));
-			        	  comboBox.addItem(equipo.getNombreEquipo());
+			        	  //comboBox.addItem(equipo.getNombreEquipo());
+			        	  comboBox.addItem(equipo);
 			          }
 			          //Cerramos conexion
 			          conexion.close();
 			      } catch(SQLException e){
 			          JOptionPane.showMessageDialog(null,"Error sql no se pueden leer datos");
 			      }
+
+		
+				
 			}
 	
 	
