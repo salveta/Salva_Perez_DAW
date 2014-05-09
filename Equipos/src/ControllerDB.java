@@ -24,7 +24,7 @@ import javax.swing.JComboBox;
 			try{
 				Class.forName("com.mysql.jdbc.Driver");
 				// establece la conexión a la base de datos
-				conexion = DriverManager.getConnection("jdbc:mysql://localhost/apuestas","root","");
+				conexion = DriverManager.getConnection("jdbc:mysql://satanin.myftp.org/apuestas", "apuestas","z62cbY9LcsLY4vQj");
 			}catch( SQLException excepcionSql ){
 				excepcionSql.printStackTrace();
 			}// fin de catch
@@ -50,11 +50,11 @@ import javax.swing.JComboBox;
 				listadoEquipos.addItem (resultado.getObject("nombreEquipo"));
 				System.out.println("El nombre del equipo es " +resultado.getObject("nombreEquipo")); 
 			}	
-			
+
 				} catch (Exception e){
 				System.out.println (e);
 				}
-			
+
 		}
 
 
@@ -75,4 +75,5 @@ import javax.swing.JComboBox;
 			listadoEquipos.removeAllItems();
 			leerEquipos(listadoEquipos);
 		}
+
 	}

@@ -22,9 +22,11 @@ private JTextField partidosGanados;
 private JTextField partidosPerdidos;
 private JTextField textField_5;
 
-	JComboBox listadoEquipos;
-	//creamos objeto para usar sus metodos
-	ControllerDB c= new ControllerDB();
+private	JComboBox listadoEquipos;
+private ControllerDB c;
+
+//Creamos objeto para llamar al método
+ControllerDB f= new ControllerDB();
 
 	/**
 	 * Launch the application.
@@ -47,7 +49,7 @@ private JTextField textField_5;
 	 */
 	public Equipos() {
 		inicializarVentana();
-		c.leerEquipos(listadoEquipos);
+		f.leerEquipos(listadoEquipos);
 	}
 
 	private void inicializarVentana(){
@@ -60,6 +62,11 @@ private JTextField textField_5;
 		contentPane.setLayout(null);
 
 		listadoEquipos = new JComboBox();
+		listadoEquipos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			
+			}
+		});
 		listadoEquipos.setBounds(0, 36, 424, 20);
 		contentPane.add(listadoEquipos);
 
@@ -121,8 +128,16 @@ private JTextField textField_5;
 		btnGuardarEquipoEn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 	
+				String NombreEquipo=nombreEquipo.getText();
+				int idLiga= Integer.valueOf(Integer.parseInt(textField_5.getText()));
+				int GolesFavor= Integer.valueOf(Integer.parseInt(golesFavor.getText()));
+				int GolesEnContra= Integer.valueOf(Integer.parseInt(golesEnContra.getText()));
+				int PartidosGanados= Integer.valueOf(Integer.parseInt(partidosGanados.getText()));
+				int PartidosPerdidos= Integer.valueOf(Integer.parseInt(partidosPerdidos.getText()));
+				
 				 //Llamamos al metodo insertar Equipo
-                c.insertarEquipos(2, "", 0, 0, 0, 0, listadoEquipos);
+                f.insertarEquipos(idLiga, NombreEquipo, GolesFavor, 
+                		GolesEnContra, PartidosGanados, PartidosPerdidos, listadoEquipos);
                 
 			}
 		});
