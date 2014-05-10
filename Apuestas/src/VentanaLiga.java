@@ -11,6 +11,8 @@ import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.JComboBox;
 
@@ -26,6 +28,8 @@ public class VentanaLiga extends JFrame {
 	private VentanaEquipo frameEquipo;
 	private VentanaLiga vLiga;
 	private Equipo equipo;
+	private ArrayList <Equipo> misEquipos;
+
 
 	
 	public VentanaLiga(Liga ligaModificada) {
@@ -74,10 +78,7 @@ public class VentanaLiga extends JFrame {
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Lanzamos la ventana Equipo
-//				VentanaEquipo frame = new VentanaEquipo(liga.getEquipo(Integer.valueOf(textEquipoModificar.getText())));
-//				frame.setVisible(true);
-//				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				OpenEquipoWindow(liga.getEquipo(liga.getnumEquipos()-1),true);
+				OpenEquipoWindow(new Equipo(),true);
 			}
 		});
 		btnModificar.setBounds(247, 208, 89, 23);
@@ -105,8 +106,9 @@ public class VentanaLiga extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				//Llamamos al eliminar equipo
 				liga.eliminarEquipo(comboBox.getSelectedIndex());
-				//System.out.println(comboBox.getSelectedIndex());
-				comboBox.removeItemAt(comboBox.getSelectedIndex());
+				//comboBox.removeItemAt(comboBox.getSelectedIndex());
+				System.out.println(comboBox.getSelectedIndex());
+				//liga.EliminarEquipo(comboBox.getSelectedIndex());
 			}
 		});
 		EliminarEquipo.setBounds(134, 208, 89, 23);

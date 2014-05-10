@@ -49,7 +49,7 @@ public class Apuestas extends JFrame {
 				//Cargamos el driver de SQL JConnector
 				Class.forName("com.mysql.jdbc.Driver");
 				// Establecemos la conexion con la BBDD y le marcamos la ruta, usuario y contraseña de la BBDD
-				conexion = DriverManager.getConnection("jdbc:mysql://satanin.myftp.org/apuestas", "apuestas","z62cbY9LcsLY4vQj");
+				conexion = DriverManager.getConnection("jdbc:mysql://localhost/apuestas","root","");			
 				//Capturamos en caso de que no conecte con la BBDD
 			}catch( SQLException excepcionSql ){
 					excepcionSql.printStackTrace();

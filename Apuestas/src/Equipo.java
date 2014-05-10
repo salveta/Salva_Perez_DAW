@@ -9,22 +9,24 @@ public class Equipo implements Serializable{
 	private int golesEnContra;
 	private int partidosGanados;
 	private int partidosPerdidos;
+	private int idEquipo;
 
 	public Equipo() 
 	{
 		// El constructor sin argumentos llama al otro constructor con los valores predeterminados
 		
-		this("", 0, 0, 0, 0);
+		this("", 0, 0, 0, 0, 0);
 	} //Fin del constructor sin argumentos
 
 		//Se inicializa un registro con los cuatro argumentos del constructor
-	public Equipo(String nom, int golesF, int golesC, int partidosG, int partidosP) {
+	public Equipo(String nom, int golesF, int golesC, int partidosG, int partidosP, int idEquipo) {
 		//Inicializamos variables
 		nombreEquipo=nom;
 		golesFavor=golesF;
 		golesEnContra=golesC;
 		partidosGanados=partidosG;
 		partidosPerdidos=partidosP;
+		this.idEquipo=idEquipo;
 		
 	}// fin del constructor de Equipo con los argumentos
 	//Iniciamos los métodos
@@ -70,6 +72,9 @@ public class Equipo implements Serializable{
 	//Metodo imprescindible para que ComboBox lea el equipo
 	public String toString(){
 		return nombreEquipo;
+	}
+	public int getIdEquipo(){
+		return this.idEquipo;
 	}
 
 }

@@ -26,6 +26,7 @@ public class Liga implements Serializable {
 		private Equipo equipo;
 
 
+
 			
 	public Liga(Connection conexion) {
 		//Inicializamos
@@ -87,18 +88,20 @@ public class Liga implements Serializable {
 			
 			public void eliminarEquipo(int posicion){
 				equipoLista.remove(posicion);
-				
 			}
+			
 	public void rellenarCombo(JComboBox j){
 		this.comboBox=j;
 		leerLiga();
-		this.leerCombobox();
+		this.rellenarCombobox();
 	}
+	
+	
 	//Metodo leer liga
 	public void leerLiga(){
 		try{
 		instruccion = (Statement) conexion.createStatement();
-		conjuntoResultados = instruccion.executeQuery("SELECT idLiga, nombre, numEquipos FROM ligas LIMIT 1");	
+		conjuntoResultados = instruccion.executeQuery("SELECT idLiga, nombre, numEquipos FROM liga LIMIT 1");	
 		conjuntoResultados.next();
 		this.idLiga=(int)conjuntoResultados.getObject("idLiga");
 		this.nombreLiga=(String)conjuntoResultados.getObject("nombre");
@@ -108,7 +111,7 @@ public class Liga implements Serializable {
 		}
 	}
 	
-	public void leerCombobox(){
+	public void rellenarCombobox(){
 		try{
 			instruccion = (Statement) conexion.createStatement();
 			conjuntoResultados = instruccion.executeQuery ("SELECT nombreEquipo FROM equipos");
@@ -123,13 +126,10 @@ public class Liga implements Serializable {
 			        	  comboBox.addItem(equipo);
 			          }
 			          //Cerramos conexion
-			          conexion.close();
+//			          conexion.close();
 			      } catch(SQLException e){
 			          JOptionPane.showMessageDialog(null,"Error sql no se pueden leer datos");
 			      }
-
-		
-				
 			}
 	
 	
@@ -150,15 +150,30 @@ public class Liga implements Serializable {
 			
 		
 	//Metodo Eliminar equipo
-	public void EliminarEquipo(Equipo equipo) throws SQLException{
-		String eliminarDato= "DELETE FROM 'equipos' WHERE 'idEquipo' = ?";
-		instruccion.executeUpdate(eliminarDato);
+	public void EliminarEquipoDB(Equipo equipo){
+		try{
+			instruccion = (Statement) conexion.createStatement();
+			String eliminarTeam = "DELETE FROM `apuestas`.`equipos` WHERE `equipos`.`idEquipo` ="+equipo.getIdEquipo();
+			instruccion.executeUpdate(eliminarTeam);
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
 	}
 	
 	//Metodo modificar equipo
-	public void modificarEquipo(){
-		
+	public void modificarEquipo(Equipo modificar){
+		try{
+			instruccion = (Statement) conexion.createStatement();
+			instruccion.executeUpdate("UPDATE `equipos` SET `nombreEquipo`=\""+modificar.toString()+"\","
+					+ " `golesFavor`="+modificar.getGolesFavor()+
+					", `golesEnContra`="+modificar.getGolesContra()+", `partidosGanados`="+modificar.getPartidosGanados()+","
+							+ " `partidosPerdidos`="+modificar.getPartidosPerdidos()+" WHERE `idEquipo`="+modificar.getIdEquipo());
+			System.out.println("Equipo Guardado");
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
 	}
+
 }
 
 		
