@@ -27,7 +27,7 @@ public class VentanaLiga extends JFrame {
 	private JComboBox <Equipo> comboBox;
 	private VentanaEquipo frameEquipo;
 	private VentanaLiga vLiga;
-	private Equipo equipo;
+	private Equipo equipo = new Equipo();
 	private ArrayList <Equipo> misEquipos;
 
 
@@ -93,7 +93,7 @@ public class VentanaLiga extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				//Llamamos al método crear equipo y le decimos que nos abra una ventana
 				liga.nuevoEquipo();
-				System.out.println(liga.getnumEquipos());
+				//System.out.println(liga.getnumEquipos());
 				OpenEquipoWindow(new Equipo(),false);
 
 			}
@@ -104,8 +104,9 @@ public class VentanaLiga extends JFrame {
 		JButton EliminarEquipo = new JButton("-");
 		EliminarEquipo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Llamamos al eliminar equipo
-				liga.eliminarEquipo(comboBox.getSelectedIndex());
+				//Pasamos objeto equipo al Arraylist Equipo a ver si así se arregla el error
+				equipo = misEquipos.get(comboBox.getSelectedIndex());
+				liga.eliminarEquipo(comboBox.getSelectedIndex(), equipo);
 				//comboBox.removeItemAt(comboBox.getSelectedIndex());
 				System.out.println(comboBox.getSelectedIndex());
 				//liga.EliminarEquipo(comboBox.getSelectedIndex());
@@ -115,6 +116,7 @@ public class VentanaLiga extends JFrame {
 		contentPane.add(EliminarEquipo);
 		
 		this.liga.rellenarCombo(this.comboBox);
+		//this.liga.deleteTeam(this.comboBox);
 		
 	}
 	

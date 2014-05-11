@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,8 +20,7 @@ public class Apuestas extends JFrame {
 	private JPanel contentPane;
 	private JTextField textNombreLiga;
 	private Liga liga;
-	//Creamos el objeto equipo y objeto liga
-	//Equipo equipo = new Equipo("", 0, 0, 0, 0);
+
 			
 	//Nos conectamos a la BBDD
 	private Connection conexion = null; 

@@ -86,8 +86,9 @@ public class Liga implements Serializable {
 				numEquipos++;
 			}
 			
-			public void eliminarEquipo(int posicion){
+			public void eliminarEquipo(int posicion, Equipo equipo){
 				equipoLista.remove(posicion);
+				EliminarEquipoDB(equipo);
 			}
 			
 	public void rellenarCombo(JComboBox j){
