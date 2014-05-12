@@ -77,4 +77,10 @@ public class Equipo implements Serializable{
 		return this.idEquipo;
 	}
 
+	public void setIdEquipo(int idEquipo) {
+		this.idEquipo = idEquipo;
+	}
+	
+	
+
 }

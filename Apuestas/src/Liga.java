@@ -87,7 +87,7 @@ public class Liga implements Serializable {
 			}
 			
 			public void eliminarEquipo(int posicion, Equipo equipo){
-				equipoLista.remove(posicion);
+				this.comboBox.removeItemAt(posicion);
 				EliminarEquipoDB(equipo);
 			}
 			
@@ -115,15 +115,18 @@ public class Liga implements Serializable {
 	public void rellenarCombobox(){
 		try{
 			instruccion = (Statement) conexion.createStatement();
-			conjuntoResultados = instruccion.executeQuery ("SELECT nombreEquipo FROM equipos");
+			conjuntoResultados = instruccion.executeQuery ("SELECT * FROM equipos");
 			          // Bucle While para iniciar la consulta						
 			          while (conjuntoResultados.next())
 			          {
 			        	  equipo = new Equipo();
 			              //Rellenamos combobox a partir de la consulta
 			        	  equipo.setNombreEquipo((String)(conjuntoResultados.getObject("nombreEquipo")));
-			        	  //comboBox.addItem(conjuntoResultados.getObject("nombreEquipo"));
-			        	  //comboBox.addItem(equipo.getNombreEquipo());
+			        	  equipo.setIdEquipo(conjuntoResultados.getInt("idEquipo"));
+			        	  equipo.setGolesFavor(conjuntoResultados.getInt("golesFavor"));
+			        	  equipo.setGolesContra(conjuntoResultados.getInt("golesEnContra"));
+			        	  equipo.setPartidosPerdidos(conjuntoResultados.getInt("PartidosPerdidos"));
+			        	  equipo.setPartidosGanados(conjuntoResultados.getInt("PartidosGanados"));
 			        	  comboBox.addItem(equipo);
 			          }
 			          //Cerramos conexion
@@ -163,18 +166,31 @@ public class Liga implements Serializable {
 	
 	//Metodo modificar equipo
 	public void modificarEquipo(Equipo modificar){
+		if(modificar.getIdEquipo()>0){
 		try{
 			instruccion = (Statement) conexion.createStatement();
 			instruccion.executeUpdate("UPDATE `equipos` SET `nombreEquipo`=\""+modificar.toString()+"\","
 					+ " `golesFavor`="+modificar.getGolesFavor()+
 					", `golesEnContra`="+modificar.getGolesContra()+", `partidosGanados`="+modificar.getPartidosGanados()+","
 							+ " `partidosPerdidos`="+modificar.getPartidosPerdidos()+" WHERE `idEquipo`="+modificar.getIdEquipo());
-			System.out.println("Equipo Guardado");
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+		
+	}else{
+		try{
+			instruccion = (Statement) conexion.createStatement();
+			String insertarBBDD = "INSERT INTO equipos (idLiga,nombreEquipo,golesFavor,golesEnContra,partidosGanados,partidosPerdidos)";	
+			insertarBBDD = insertarBBDD + "VALUES ("+idLiga+",'"+equipo.getNombreEquipo()+"',"+equipo.getGolesFavor()+","
+					+ ""+equipo.getGolesContra()+","+equipo.getPartidosGanados()+","
+							+ ""+equipo.getPartidosPerdidos()+")";
+			System.out.println(insertarBBDD);
+			instruccion.executeUpdate(insertarBBDD);
 		}catch (SQLException e){
 			e.printStackTrace();
 		}
 	}
-
+	}
 }
 
 		

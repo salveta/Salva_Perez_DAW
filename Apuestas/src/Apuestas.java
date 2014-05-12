@@ -57,6 +57,8 @@ public class Apuestas extends JFrame {
 			catch( ClassNotFoundException ClassNotFound ){
 					ClassNotFound.printStackTrace();
 			}// fin de catch
+			
+			//Creamos conexion con liga
 			liga= new Liga((com.mysql.jdbc.Connection) conexion);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

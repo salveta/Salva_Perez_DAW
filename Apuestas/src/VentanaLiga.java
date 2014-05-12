@@ -78,7 +78,10 @@ public class VentanaLiga extends JFrame {
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Lanzamos la ventana Equipo
-				OpenEquipoWindow(new Equipo(),true);
+				//OpenEquipoWindow(liga.getEquipo(liga.getnumEquipos()-1),true);
+				OpenEquipoWindow(comboBox.getItemAt(comboBox.getSelectedIndex()),true);
+				equipo = comboBox.getItemAt(comboBox.getSelectedIndex());
+				liga.modificarEquipo(equipo);
 			}
 		});
 		btnModificar.setBounds(247, 208, 89, 23);
@@ -105,24 +108,22 @@ public class VentanaLiga extends JFrame {
 		EliminarEquipo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Pasamos objeto equipo al Arraylist Equipo a ver si así se arregla el error
-				equipo = misEquipos.get(comboBox.getSelectedIndex());
+				equipo = comboBox.getItemAt(comboBox.getSelectedIndex());
 				liga.eliminarEquipo(comboBox.getSelectedIndex(), equipo);
-				//comboBox.removeItemAt(comboBox.getSelectedIndex());
 				System.out.println(comboBox.getSelectedIndex());
-				//liga.EliminarEquipo(comboBox.getSelectedIndex());
 			}
 		});
 		EliminarEquipo.setBounds(134, 208, 89, 23);
 		contentPane.add(EliminarEquipo);
 		
+		//Llamamos para que rellene el comboBox
 		this.liga.rellenarCombo(this.comboBox);
-		//this.liga.deleteTeam(this.comboBox);
 		
 	}
 	
 	//Creamos método para poder modificar un equipo
 	private void OpenEquipoWindow(Equipo equipo, boolean modifica){
-		frameEquipo = new VentanaEquipo (equipo,this.comboBox,modifica,this.liga);
+		frameEquipo = new VentanaEquipo (equipo,this.comboBox, modifica, this.liga);
 		frameEquipo.setVisible(true);
 		frameEquipo.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
