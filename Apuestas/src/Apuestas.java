@@ -19,9 +19,8 @@ public class Apuestas extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textNombreLiga;
+	//Llamamos a la clase Liga para poder usarla en esta clase
 	private Liga liga;
-
-			
 	//Nos conectamos a la BBDD
 	private Connection conexion = null; 
 
@@ -103,7 +102,7 @@ public class Apuestas extends JFrame {
 	
 	//metodo para abrir la ventana principal
 	public void abrirVentanaLiga(Liga liga){
-		//Decimos que nos abra la ventanaLiga
+		//Decimos que nos abra la ventanaLiga pasandole liga
 		VentanaLiga frame2 = new VentanaLiga(liga);
 		frame2.setVisible(true);
 		frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

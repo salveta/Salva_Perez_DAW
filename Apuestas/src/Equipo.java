@@ -76,7 +76,7 @@ public class Equipo implements Serializable{
 	public int getIdEquipo(){
 		return this.idEquipo;
 	}
-
+	//Este metodo lo creamos para que la BBDD nos devuelva el id del equipo y poder eliminarlo
 	public void setIdEquipo(int idEquipo) {
 		this.idEquipo = idEquipo;
 	}

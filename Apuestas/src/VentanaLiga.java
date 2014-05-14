@@ -28,7 +28,7 @@ public class VentanaLiga extends JFrame {
 	private VentanaEquipo frameEquipo;
 	private VentanaLiga vLiga;
 	private Equipo equipo = new Equipo();
-	private ArrayList <Equipo> misEquipos;
+
 
 
 	
@@ -97,6 +97,7 @@ public class VentanaLiga extends JFrame {
 				//Llamamos al método crear equipo y le decimos que nos abra una ventana
 				liga.nuevoEquipo();
 				//System.out.println(liga.getnumEquipos());
+				//Le pasamos un nuevo equipo a la ventana que lanzamos para que lo cree
 				OpenEquipoWindow(new Equipo(),false);
 
 			}
@@ -110,7 +111,6 @@ public class VentanaLiga extends JFrame {
 				//Pasamos objeto equipo al Arraylist Equipo a ver si así se arregla el error
 				equipo = comboBox.getItemAt(comboBox.getSelectedIndex());
 				liga.eliminarEquipo(comboBox.getSelectedIndex(), equipo);
-				System.out.println(comboBox.getSelectedIndex());
 			}
 		});
 		EliminarEquipo.setBounds(134, 208, 89, 23);
@@ -121,7 +121,7 @@ public class VentanaLiga extends JFrame {
 		
 	}
 	
-	//Creamos método para poder modificar un equipo
+	//Creamos método para poder modificar un equipo en una ventana nueva
 	private void OpenEquipoWindow(Equipo equipo, boolean modifica){
 		frameEquipo = new VentanaEquipo (equipo,this.comboBox, modifica, this.liga);
 		frameEquipo.setVisible(true);

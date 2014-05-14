@@ -153,6 +153,8 @@ public class VentanaEquipo extends JFrame {
 		}else{
 			Equipo equipoElegido=(Equipo)comboBox.getSelectedItem();
 			equipoElegido.setNombreEquipo(equipo.getNombreEquipo());
+			//Llamamos al método modificar equipo creado en la BBDD
+			liga.modificarEquipo(equipo);
 		}
 	}
 	

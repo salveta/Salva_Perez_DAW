@@ -14,7 +14,6 @@ public class Liga implements Serializable {
 	//Variables
 		private int numEquipos;
 		private String nombreLiga;
-		//private Equipo equipo[];
 		private ArrayList <Equipo> equipoLista = new ArrayList <Equipo> ();
 		private int idLiga;
 	
@@ -33,16 +32,7 @@ public class Liga implements Serializable {
 		nombreLiga="Liga Española";
 		numEquipos=0;		
 		this.conexion=conexion;
-		this.comboBox=comboBox;
-		// Rellenamos el arrayList
-		// for (int i = 0; i <numEquipos; i++) {
-		//((equipoLista.add(new Equipo());
-		//System.out.println (equipoLista.get (i));
-		//}		
-		/*
-		leerLiga();
-		leerCombobox();*/
-		
+		this.comboBox=comboBox;		
 	}
 
 	//Creamos el constructor al que  pasamos los valores que queremos
@@ -50,13 +40,6 @@ public class Liga implements Serializable {
 				numEquipos=numero;
 				nombreLiga=nombre;
 				this.conexion=conexion;
-				// Inicializamos el arrayList
-//				equipoLista = new ArrayList <Equipo> ();
-//				// Rellenamos el arrayList
-				for (int i = 0; i <numEquipos; i++) {
-				equipoLista.add(new Equipo());
-				// System.out.println (equipoLista.get (i));
-				}
 	}
 			
 			//Creación de getter y setter 
@@ -85,19 +68,16 @@ public class Liga implements Serializable {
 				equipoLista.add(new Equipo());
 				numEquipos++;
 			}
-			
+			//Necesitamos pasarle el metodo de eliminar Equipo que se conecta con la BBDD
 			public void eliminarEquipo(int posicion, Equipo equipo){
 				this.comboBox.removeItemAt(posicion);
 				EliminarEquipoDB(equipo);
 			}
 			
-	public void rellenarCombo(JComboBox j){
-		this.comboBox=j;
-		leerLiga();
-		this.rellenarCombobox();
-	}
-	
-	
+
+/*--------------------------Metodos de interacción con la Base de Datos-----------------------------------*/
+				
+
 	//Metodo leer liga
 	public void leerLiga(){
 		try{
@@ -112,7 +92,8 @@ public class Liga implements Serializable {
 		}
 	}
 	
-	public void rellenarCombobox(){
+	//Metodo para rellenar el Combobox con la info de la BBDD
+	public void rellenarCombobox(JComboBox j){
 		try{
 			instruccion = (Statement) conexion.createStatement();
 			conjuntoResultados = instruccion.executeQuery ("SELECT * FROM equipos");
@@ -129,12 +110,16 @@ public class Liga implements Serializable {
 			        	  equipo.setPartidosGanados(conjuntoResultados.getInt("PartidosGanados"));
 			        	  comboBox.addItem(equipo);
 			          }
-			          //Cerramos conexion
-//			          conexion.close();
 			      } catch(SQLException e){
 			          JOptionPane.showMessageDialog(null,"Error sql no se pueden leer datos");
 			      }
 			}
+	
+	public void rellenarCombo(JComboBox j){
+		this.comboBox=j;
+		leerLiga();
+		this.rellenarCombobox(j);
+	}
 	
 	
 	//Metodo insertar equipo
@@ -148,8 +133,9 @@ public class Liga implements Serializable {
 							+ ""+equipo.getPartidosPerdidos()+")";
 			instruccion.executeUpdate(insertarBBDD);
 			}catch(SQLException excepcionSql ){
-				excepcionSql.printStackTrace();	
+				excepcionSql.printStackTrace();					
 			}		
+        
 }
 			
 		
@@ -169,27 +155,15 @@ public class Liga implements Serializable {
 		if(modificar.getIdEquipo()>0){
 		try{
 			instruccion = (Statement) conexion.createStatement();
-			instruccion.executeUpdate("UPDATE `equipos` SET `nombreEquipo`=\""+modificar.toString()+"\","
+			String UpdateBBDD = ("UPDATE `equipos` SET `nombreEquipo`=\""+modificar.toString()+"\","
 					+ " `golesFavor`="+modificar.getGolesFavor()+
 					", `golesEnContra`="+modificar.getGolesContra()+", `partidosGanados`="+modificar.getPartidosGanados()+","
 							+ " `partidosPerdidos`="+modificar.getPartidosPerdidos()+" WHERE `idEquipo`="+modificar.getIdEquipo());
+					instruccion.executeUpdate(UpdateBBDD);
 		}catch (SQLException e){
 			e.printStackTrace();
 		}
-		
-	}else{
-		try{
-			instruccion = (Statement) conexion.createStatement();
-			String insertarBBDD = "INSERT INTO equipos (idLiga,nombreEquipo,golesFavor,golesEnContra,partidosGanados,partidosPerdidos)";	
-			insertarBBDD = insertarBBDD + "VALUES ("+idLiga+",'"+equipo.getNombreEquipo()+"',"+equipo.getGolesFavor()+","
-					+ ""+equipo.getGolesContra()+","+equipo.getPartidosGanados()+","
-							+ ""+equipo.getPartidosPerdidos()+")";
-			System.out.println(insertarBBDD);
-			instruccion.executeUpdate(insertarBBDD);
-		}catch (SQLException e){
-			e.printStackTrace();
 		}
-	}
 	}
 }
 
